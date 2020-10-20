@@ -5,6 +5,29 @@ const Admin = require('../models/adminSchema');
 const bcrypt = require('bcrypt');
 
 
+/* Train Route for showing all the trains for Booking */
+
+router.get('/',(req,res)=>{
+
+  Train.find().exec().then(doc =>{
+    res.status(200).send(doc);
+  }).catch(err => res.status(400).send(err));
+});
+
+
+/* Search Route for one keyword which result in showing 
+Train Routes when user search for PNR Number,Source and Destination */
+
+router.get('/search',(req,res)=>{
+  Train.find({$or:[{pnr: req.body.keyword},
+    {source: req.body.keyword},{destination:req.body.keyword}]}).exec()
+    .then(result=>{
+    res.status(200).send(result);
+  }).catch(err=>{
+    res.status(204).send(err);
+  })
+});
+
 /*ADD Route in which Admin can add new Train Routes */ 
 router.post('/adminTrainAdd', async function (req, res) {
   try{

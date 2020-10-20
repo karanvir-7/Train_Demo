@@ -1,17 +1,7 @@
 const express = require('express');
 const router = new express.Router();
-const Train  = require('../models/TrainSchema');
+//const Train  = require('../models/TrainSchema');
 const User = require('../models/userSchema');
-
-
-/* Train Route for showing all the trains for Booking */
-
-router.get('/',(req,res)=>{
-
-    Train.find().exec().then(doc =>{
-      res.status(200).send(doc);
-    }).catch(err => res.status(400).send(err));
-});
 
 
 /* Book Route when user send desired data it will save 
@@ -43,17 +33,6 @@ router.post('/bookTickets',(req,res)=>{
 });
 
 
-/* Search Route for one keyword which result in showing 
-Train Routes when user search for PNR Number,Source and Destination */
 
-router.get('/search',(req,res)=>{
-  Train.find({$or:[{pnr: req.body.keyword},
-    {source: req.body.keyword},{destination:req.body.keyword}]}).exec()
-    .then(result=>{
-    res.status(200).send(result);
-  }).catch(err=>{
-    res.status(204).send(err);
-  })
-});
 
 module.exports = router;

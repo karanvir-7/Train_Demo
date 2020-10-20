@@ -23,9 +23,6 @@ router.post('/addNewAdmin', async(req, res)=> {
     });
     admin.password = await bcrypt.hash(admin.password,8);
 
-   // const token =  jwt.sign({ _id:admin._id.toString() },'thismynewcourse');
-  
-   // admin.tokens = admin.tokens.concat( {token:token})
 
     await admin.save();
     res.status(201).send('New Admin Added');
@@ -38,27 +35,3 @@ router.post('/addNewAdmin', async(req, res)=> {
 
 module.exports = router;
 
-// router.post('/adminLogIn',async (req,res)=>{
-//   try{
-//       console.log(req.body)
-//       const admin =  await Admin.findOne({adminId : req.body.adminId});
-//       if(!admin){
-//           throw new Error('Unable to LogIn');   
-//       } 
-
-//       const isMatch = await bcrypt.compare(req.body.password,admin.password);
-
-//       if(!isMatch){
-//           throw new Error('Password is not Correct');
-//       }
-      
-//       const token = await jwt.sign({ _id:admin._id.toString() },'thismynewcourse');
-//       admin.tokens = admin.tokens.concat( {token:token})
-//       await admin.save();
-//       res.send(admin) 
-//   }
-//   catch(e){
-//       res.status(400).send('Invalid Credentials');
-//   }
-  
-// });
